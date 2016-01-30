@@ -73,7 +73,7 @@ bindsym $mod+Ctrl+x exec xkill
 bindsym $mod+j focus left
 bindsym $mod+k focus down
 bindsym $mod+l focus up
-bindsym $mod+odiaeresis focus right
+bindsym $mod+ç focus right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
@@ -252,6 +252,12 @@ mode "resize" {
 # Lock screen
 bindsym $mod+9 exec --no-startup-id blurlock
 
+set $bg-color 	         #2f343f
+set $inactive-bg-color   #2f343f
+set $text-color          #f3f4f5
+set $inactive-text-color #676E7D
+set $urgent-bg-color     #E53935
+
 # Start i3bar to display a workspace bar (plus the system information i3status if available)
 bar {
 	status_command i3status
@@ -259,14 +265,15 @@ bar {
 #	wheel_down_cmd nop
 	font pango:Cantarell,Icons 9
 	colors {
-		separator #2ECC71
-		background #000000
-		statusline #DDDDDD
-		focused_workspace #FFFFFF #2ECC71 #000000
-		active_workspace #000000 #A4A28D #FFFFFF
-		inactive_workspace #A4A28D #000000 #DDDDDD
-		urgent_workspace #2ECC71 #900000 #FFFFFF
+		background $bg-color
+	    	separator #757575
+		#                  border             background         text
+		focused_workspace  $bg-color          $bg-color          $text-color
+		inactive_workspace $inactive-bg-color $inactive-bg-color $inactive-text-color
+		urgent_workspace   $urgent-bg-color   $urgent-bg-color   $text-color
 	}
+
+
 }
 
 # Autostart applications
@@ -285,10 +292,12 @@ exec --no-startup-id start_conky_grey
 # exec --no-startup-id start_conky_green
 exec --no-startup-id xautolock -time 10 -locker blurlock
 
-# Theme colors
-client.focused #2ECC71 #2ECC71 #000000 #FFFFFF
-client.unfocused #222222 #222222 #2ECC71 #222222
-client.urgent #274D01 #900000 #FFFFFF #900000
+# window colors
+#                       border              background         text                 indicator
+client.focused          $bg-color           $bg-color          $text-color          #00ff00
+client.unfocused        $inactive-bg-color $inactive-bg-color $inactive-text-color #00ff00
+client.focused_inactive $inactive-bg-color $inactive-bg-color $inactive-text-color #00ff00
+client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color          #00ff00
 
 #############################
 ### settings for i3-gaps: ###
